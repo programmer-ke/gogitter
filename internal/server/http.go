@@ -23,6 +23,12 @@ type httpServer struct {
 	Log *Log
 }
 
+func newHTTPServer() *httpServer {
+	return &httpServer{
+		Log: NewLog(),
+	}
+}
+
 func (s *httpServer) handleProduce(w http.ResponseWriter, r *http.Request) {
 	var req ProduceRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -67,12 +73,6 @@ func (s *httpServer) handleConsume(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
-	}
-}
-
-func newHTTPServer() *httpServer {
-	return &httpServer{
-		Log: NewLog(),
 	}
 }
 
